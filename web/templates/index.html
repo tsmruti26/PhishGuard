@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Premium Threat Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(135deg, #fff 0%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .accent-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .risk-high { color: #ff4d4d; text-shadow: 0 0 8px rgba(255, 77, 77, 0.4); }
+        .risk-med { color: #fbbf24; }
+        .risk-low { color: #34d399; }
+        .input-field { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); color: white; transition: all 0.2s; }
+        .input-field:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">P</div>
+            <span class="text-xl font-semibold tracking-tight">PhishGuard<span class="text-blue-500">.</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm text-gray-400">
+            <a href="#" class="hover:text-white transition">Analysis</a>
+            <a href="#" class="hover:text-white transition"> intelligence</a>
+            <a href="#" class="hover:text-white transition">Documentation</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter gradient-text mb-6">
+            Detect Phishing Before <br>It Hits Your Inbox.
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+            The advanced threat intelligence engine that exposes typosquatting variants and deceptive QR codes using visual similarity and DNS auditing.
+        </p>
+
+        <!-- Analysis Tools -->
+        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+            <!-- Domain Analysis Card -->
+            <div class="glass p-8 rounded-3xl text-left accent-glow">
+                <div class="mb-6">
+                    <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Domain Auditor</h3>
+                    <p class="text-sm text-gray-500 mb-6">Check for registered typosquats and visual clones.</p>
+                </div>
+                <div class="flex gap-2">
+                    <input id="domain-input" type="text" placeholder="google.com" class="input-field flex-1 px-4 py-2 rounded-xl text-sm">
+                    <button onclick="analyzeDomain()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition">Scan</button>
+                </div>
+                <div id="domain-results" class="mt-6 hidden">
+                    <div class="flex justify-between items-center mb-2 text-xs text-gray-500 uppercase tracking-widest">
+                        <span>Variant</span>
+                        <span>Risk Score</span>
+                    </div>
+                    <div id="domain-list" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- QR Analysis Card -->
+            <div class="glass p-8 rounded-3xl text-left accent-glow">
+                <div class="mb-6">
+                    <div class="w-10 h-10 bg-purple-500/10 text-purple-500 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-18 0h2m12-6h2m-18 0h2m12 6h2m-18 0h2M12 12v4m0 0v4m0-4h4m-4 0h-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">QR Scanner</h3>
+                    <p class="text-sm text-gray-500 mb-6">Identify "quishing" links and hidden redirects.</p>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <input id="qr-input" type="file" class="hidden" onchange="analyzeQR()">
+                    <button onclick="document.getElementById('qr-input').click()" class="w-full py-2 px-4 rounded-xl border border-white/10 hover:bg-white/5 transition text-sm font-medium text-gray-300">
+                        Upload QR Image
+                    </button>
+                </div>
+                <div id="qr-results" class="mt-6 hidden p-4 rounded-2xl bg-black/40 border border-white/5">
+                    <div class="text-xs text-gray-500 mb-1">Destination URL:</div>
+                    <div id="qr-url" class="mono text-sm break-all text-blue-400 mb-3"></div>
+                    <div id="qr-indicators" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        async function analyzeDomain() {
+            const domain = document.getElementById('domain-input').value;
+            if (!domain) return;
+
+            const resDiv = document.getElementById('domain-results');
+            const listDiv = document.getElementById('domain-list');
+
+            resDiv.classList.remove('hidden');
+            listDiv.innerHTML = '<div class="text-sm text-gray-500">Analyzing DNS records...</div>';
+
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/scan-domain', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domain })
+                });
+                const data = await response.json();
+
+                listDiv.innerHTML = '';
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(res => {
+                        const riskClass = res.risk_score > 70 ? 'risk-high' : res.risk_score > 40 ? 'risk-med' : 'risk-low';
+                        listDiv.innerHTML += `
+                            <div class="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition group">
+                                <span class="mono text-sm">${res.domain}</span>
+                                <span class="text-xs font-bold ${riskClass}">${res.risk_score.toFixed(1)}%</span>
+                            </div>
+                        `;
+                    });
+                } else {
+                    listDiv.innerHTML = '<div class="text-sm text-gray-500">No registered typosquats found.</div>';
+                }
+            } catch (e) {
+                listDiv.innerHTML = '<div class="text-sm text-red-400">Error connecting to engine.</div>';
+            }
+        }
+
+        async function analyzeQR() {
+            const fileInput = document.getElementById('qr-input');
+            const resDiv = document.getElementById('qr-results');
+            const urlDiv = document.getElementById('qr-url');
+            const indicatorsDiv = document.getElementById('qr-indicators');
+
+            if (!fileInput.files[0]) return;
+
+            resDiv.classList.remove('hidden');
+            urlDiv.innerText = 'Analyzing...';
+            indicatorsDiv.innerHTML = '';
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/scan-qr', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    urlDiv.innerText = data.error;
+                    return;
+                }
+
+                urlDiv.innerText = data.final_url;
+                data.indicators.forEach(ind => {
+                    indicatorsDiv.innerHTML += `
+                        <span class="text-[10px] px-2 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 font-medium">
+                            ${ind}
+                        </span>
+                    `;
+                });
+            } catch (e) {
+                urlDiv.innerText = 'Error analyzing QR code.';
+            }
+        }
+    </script>
+</body>
+</html>
