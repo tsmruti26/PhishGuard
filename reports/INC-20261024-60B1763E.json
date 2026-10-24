@@ -1,0 +1,91 @@
+{
+  "schema": "phishguard.incident/1.0",
+  "incident": {
+    "id": "INC-20261024-60B1763E",
+    "title": "Malicious qr code phishing (quishing): hxxp://xn--gogle-kva[.]com",
+    "severity": "critical",
+    "status": "open",
+    "tlp": "TLP:AMBER",
+    "detected_at": "2026-10-24T15:40:07Z",
+    "reported_at": "2026-10-24T15:40:07Z",
+    "reporter": "unassigned"
+  },
+  "classification": {
+    "category": "Phishing (suspected credential harvesting)",
+    "vector": "QR code phishing (quishing)",
+    "attack_techniques": [
+      {
+        "id": "T1566.002",
+        "name": "Phishing: Spearphishing Link",
+        "tactic": "Initial Access"
+      },
+      {
+        "id": "T1204.001",
+        "name": "User Execution: Malicious Link",
+        "tactic": "Execution"
+      }
+    ]
+  },
+  "detection_and_analysis": {
+    "detection_source": "PhishGuard automated scan",
+    "verdict": "malicious",
+    "risk_score": 88.0,
+    "findings": [
+      "Punycode homoglyph detected"
+    ],
+    "indicators_defanged": [
+      {
+        "type": "url",
+        "value": "hxxp://xn--gogle-kva[.]com",
+        "note": "Scanned target"
+      },
+      {
+        "type": "url",
+        "value": "hxxps://bit[.]ly/abc",
+        "note": "Redirect hop 1"
+      },
+      {
+        "type": "url",
+        "value": "hxxp://xn--gogle-kva[.]com",
+        "note": "Final destination"
+      }
+    ]
+  },
+  "containment_eradication_recovery": {
+    "recommended_actions": [
+      "Add both the Punycode and Unicode forms of the domain to the DNS blocklist.",
+      "Preserve the original QR image or URL and the scan output as evidence before any cleanup.",
+      "Search proxy, DNS and email logs for other users who contacted the indicators below.",
+      "If anyone entered credentials, reset them, revoke active sessions and re-enrol MFA.",
+      "Submit the indicators to the registrar or hosting provider for takedown and to your threat-intel platform."
+    ],
+    "completed_actions": []
+  },
+  "impact_assessment": {
+    "affected_users": "To be determined",
+    "data_exposure": "To be determined",
+    "business_impact": "To be determined"
+  },
+  "timeline": [
+    {
+      "ts": "2026-10-24T15:40:07Z",
+      "event": "Threat detected by PhishGuard scan"
+    },
+    {
+      "ts": "2026-10-24T15:40:07Z",
+      "event": "Incident report generated"
+    }
+  ],
+  "post_incident": {
+    "lessons_learned": [],
+    "preventive_measures": [
+      "Run an awareness reminder on scanning unsolicited QR codes.",
+      "Enable DNS filtering for newly registered and look-alike domains.",
+      "Review browser IDN display policy so Punycode is shown for mixed-script domains."
+    ]
+  },
+  "integrity": {
+    "algorithm": "SHA-256",
+    "digest": "59fc7c540d93a62b6eb2b0c3a667ad2f99fd1b06401bdbbbeb522e5b47b29a36"
+  }
+}
