@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "roles": {
+    "analyst_readonly": {
+      "tools": ["list_scans", "get_scan", "list_incidents", "get_incident_report"],
+      "rate_limit_per_minute": 30,
+      "tables": {
+        "scans": {
+          "columns": ["id", "target", "kind", "risk_score", "verdict", "created_at"],
+          "max_rows": 50
+        },
+        "incidents": {
+          "columns": ["id", "incident_id", "scan_id", "title", "severity", "status", "report_json", "created_at", "updated_at"],
+          "max_rows": 50
+        }
+      },
+      "write_tables": []
+    },
+    "incident_responder": {
+      "tools": ["list_scans", "get_scan", "list_incidents", "get_incident_report", "create_incident", "update_incident_status"],
+      "rate_limit_per_minute": 20,
+      "tables": {
+        "scans": {
+          "columns": ["id", "target", "kind", "risk_score", "verdict", "created_at"],
+          "max_rows": 50
+        },
+        "incidents": {
+          "columns": ["id", "incident_id", "scan_id", "title", "severity", "status", "report_json", "created_at", "updated_at"],
+          "max_rows": 50
+        }
+      },
+      "write_tables": ["incidents"],
+      "status_transitions": {
+        "open": ["investigating"],
+        "investigating": ["contained", "resolved"],
+        "contained": ["resolved"],
+        "resolved": ["closed"]
+      }
+    },
+    "admin": {
+      "tools": ["list_scans", "get_scan", "list_incidents", "get_incident_report", "create_incident", "update_incident_status"],
+      "rate_limit_per_minute": 60,
+      "tables": {
+        "scans": {
+          "columns": ["id", "target", "kind", "risk_score", "verdict", "raw_payload", "created_at"],
+          "max_rows": 200
+        },
+        "incidents": {
+          "columns": ["id", "incident_id", "scan_id", "title", "severity", "status", "report_json", "created_at", "updated_at"],
+          "max_rows": 200
+        }
+      },
+      "write_tables": ["incidents"],
+      "status_transitions": {
+        "open": ["investigating", "closed"],
+        "investigating": ["contained", "resolved", "closed"],
+        "contained": ["resolved", "closed"],
+        "resolved": ["closed", "open"],
+        "closed": ["open"]
+      }
+    }
+  }
+}
