@@ -11,7 +11,7 @@ class QuishingScanner:
     def scan_qr(self, image_path):
         """Decodes a QR code from an image and analyzes the URL."""
         try:
-            img = Image.open(image_path)
+            img = Image.open(image_path).convert('L')
             decoded_objects = decode(img)
             if not decoded_objects:
                 return {"error": "No QR code found in image"}

@@ -1,0 +1,10 @@
+﻿__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.vscode/
+.idea/
+temp_qr.png
+test_cases/qr_codes/
+*.log
