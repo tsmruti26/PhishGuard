@@ -8,3 +8,11 @@ venv/
 temp_qr.png
 test_cases/qr_codes/
 *.log
+
+reports/
+data/
+*.db
+
+reports/
+data/
+*.db
