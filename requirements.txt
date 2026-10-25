@@ -77,7 +77,7 @@ license-expression==30.4.4
 limits==5.8.0
 markdown-it-py==4.2.0
 MarkupSafe==3.0.4
-mcp==1.30.0
+mcp==2.3.0
 mcp-types==2.3.0
 mdurl==0.1.2
 mmh3==5.3.1
